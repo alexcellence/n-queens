@@ -77,13 +77,25 @@
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
+
+    // Assumptions: piece will be represented with a 1, empty space will be a 0
+    // Rooks: check rows and columns
+    // Queens: check rows, columns, and diagonals
+
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      // rowIndex will refer to a whole array (the row)
+      // add up array elements
+      // if sum is ever > 1, return true
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      // use this.get('n') to get value of n
+      // assume board is an array of arrays/rows
+      // while i is less than n, check every row using hasRowConflictAt
+      // if is ever true, return true
       return false; // fixme
     },
 
@@ -94,11 +106,15 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // once an item appears in a certain index on a row, no other row can have that index occupied
+      // check every row at that colIndex and add up. if number is ever > 1 return true
+      // use this.get('n') to determine how many rows there are
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // check every n indexes and test hasColConflictAt
       return false; // fixme
     },
 
@@ -109,6 +125,11 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      // assign majorIndex to majorDiagonalColumnIndexAtFirstRow
+      // assign n to this.get('n')
+      // if majorIndex is 0, iterate through n and add the values of Board[i][i]
+      // if majorIndex is negative, iterate through while i < n+majorIndex and add the values of Board[math.Abs(majorIndex)][i]
+      // if majorIndex is positive, iterate through while i < n-majorIndex and add the values of Board[i][majorIndex+i]
       return false; // fixme
     },
 
