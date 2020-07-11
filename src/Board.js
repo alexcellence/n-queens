@@ -199,7 +199,6 @@
       // set variable d to equal n-2
       var d = n - 2;
       // create for loop
-      debugger;
       // set i to start at -d and it will run until it is positive d
       for (var i = -d; i <= d; i++) {
         // run hasMajorDiagonalConflict with i as the input
@@ -216,17 +215,69 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
+
+
+    // _getFirstRowColumnIndexForMinorDiagonalOn
+
+    // argument: "minorDiagonalColumnIndexAtFirstRow"
+
+
+
+
+
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      //CHANGE
-      // once an item appears in a certain index on a row, no other row can have that index occupied
-      // check every row at that colIndex and add up. if number is ever > 1 return true
       // use this.get('n') to determine how many rows there are
-      return false; // fixme
+      var n = this.get('n');
+      var minorIndex = minorDiagonalColumnIndexAtFirstRow;
+      var diagonalSum = 0;
+      // use a while loop to increment and decrement indexes according to minorIndex
+      debugger;
+      if (minorIndex === 0) {
+        return false;
+      }
+      if (minorIndex < n) {
+        var i = 0;
+        var j = minorIndex;
+        while (j >= 0) {
+          diagonalSum += this.attributes[i][j];
+          i++;
+          j--;
+        }
+      }
+      if (minorIndex >= n) {
+        var l = n - 1;
+        var k = minorIndex - l;
+        while (k <= (n - 1)) {
+          diagonalSum += this.attributes[k][l];
+          k++;
+          l--;
+        }
+      }
+      // one variable will start at 0 and one variable will start at minorIndex
+      // this only applies to minorIndexes < n
+      // if minorIndex = n, one index starts at 1 and the other index starts at n - 1
+      //   increment and decrement respectively until they equal the other
+      // if minorIndex > n then indexes will be n - 1 and minorIndex - (n - 1);
+      return diagonalSum > 1 ? true : false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      // get value of n
+      var n = this.get('n');
+      // assign lastDiagonal to (n-2)*2+1
+      var lastDiagonal = (n - 2) * 2 + 1;
+      console.log(lastDiagonal);
+      debugger;
+      // create for loop
+      // set i to start at -d and it will run until it is positive d
+      for (var i = 1; i <= lastDiagonal; i++) {
+        // run hasMinorDiagonalConflict with i as the input
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
