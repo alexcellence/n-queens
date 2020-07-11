@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -84,19 +84,27 @@
 
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      // rowIndex will refer to a whole array (the row)
-      // add up array elements
-      // if sum is ever > 1, return true
-      return false; // fixme
+      // this.attributes is an object containing the row arrays. the keys are the row numbers and the values are the rows themselves
+      var currentArray = this.attributes[rowIndex];
+      // use reduce to boil down the array elements to a single sum
+      var sum = _.reduce(currentArray, (acc, element) => acc + element, 0);
+      // if sum > 1 return true that there is a conflict
+      return sum > 1 ? true : false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       // use this.get('n') to get value of n
-      // assume board is an array of arrays/rows
-      // while i is less than n, check every row using hasRowConflictAt
-      // if is ever true, return true
-      return false; // fixme
+      var n = this.get('n');
+      // iterate through all the rows
+      for (var i = 0; i < n; i++) {
+        var currentArray = this.attributes[i];
+        var sum = _.reduce(currentArray, (acc, element) => acc + element, 0);
+        if (sum > 1) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -109,13 +117,34 @@
       // once an item appears in a certain index on a row, no other row can have that index occupied
       // check every row at that colIndex and add up. if number is ever > 1 return true
       // use this.get('n') to determine how many rows there are
-      return false; // fixme
+      var n = this.get('n');
+
+      var columnSum = 0;
+      // iterate through index
+      for (var i = 0; i < n; i++) {
+        // columnIndex stays constant
+        columnSum += this.attributes[i][colIndex];
+        return columnSum > 1 ? true : false;
+      }
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       // check every n indexes and test hasColConflictAt
-      return false; // fixme
+      var n = this.get('n');
+
+      // iterate through index first
+      for (var i = 0; i < n; i++) {
+        var columnSum = 0;
+        // then iterate through the rows
+        for (var j = 0; j < n; j++) {
+          columnSum += this.attributes[j][i];
+          if (columnSum > 1) {
+            return true;
+          }
+        }
+      }
+      return false;
     },
 
 
@@ -130,7 +159,38 @@
       // if majorIndex is 0, iterate through n and add the values of Board[i][i]
       // if majorIndex is negative, iterate through while i < n+majorIndex and add the values of Board[math.Abs(majorIndex)][i]
       // if majorIndex is positive, iterate through while i < n-majorIndex and add the values of Board[i][majorIndex+i]
-      return false; // fixme
+
+      var n = this.get('n');
+      var majorIndex = majorDiagonalColumnIndexAtFirstRow;
+      var diagonalSum = 0;
+      debugger;
+      console.log(this);
+      if (majorIndex === 0) {
+        var i = 0;
+        while (i < n) {
+          diagonalSum += this.attributes[i][i];
+          i++;
+        }
+      }
+      if (majorIndex < 0) {
+        var j = Math.abs(majorIndex);
+        var k = 0;
+        while (j < n && k < n / 2) {
+          diagonalSum += this.attributes[j][k];
+          j++;
+          k++;
+        }
+      }
+      if (majorIndex > 0) {
+        var l = majorIndex;
+        var k = 0;
+        while (k < n / 2 && l < n) {
+          diagonalSum += this.attributes[k][l];
+          k++;
+          l++;
+        }
+      }
+      return diagonalSum > 1 ? true : false;
     },
 
     // test if any major diagonals on this board contain conflicts
