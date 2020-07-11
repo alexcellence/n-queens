@@ -163,8 +163,7 @@
       var n = this.get('n');
       var majorIndex = majorDiagonalColumnIndexAtFirstRow;
       var diagonalSum = 0;
-      debugger;
-      console.log(this);
+      // console.log(this);
       if (majorIndex === 0) {
         var i = 0;
         while (i < n) {
@@ -175,19 +174,19 @@
       if (majorIndex < 0) {
         var j = Math.abs(majorIndex);
         var k = 0;
-        while (j < n && k < n / 2) {
+        while (j < n && k <= (n / 2)) {
           diagonalSum += this.attributes[j][k];
           j++;
           k++;
         }
       }
       if (majorIndex > 0) {
-        var l = majorIndex;
-        var k = 0;
-        while (k < n / 2 && l < n) {
-          diagonalSum += this.attributes[k][l];
-          k++;
+        var l = 0;
+        var m = majorIndex;
+        while (l <= (n / 2) && m < n) {
+          diagonalSum += this.attributes[l][m];
           l++;
+          m++;
         }
       }
       return diagonalSum > 1 ? true : false;
@@ -195,7 +194,20 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      // get value of n
+      var n = this.get('n');
+      // set variable d to equal n-2
+      var d = n - 2;
+      // create for loop
+      debugger;
+      // set i to start at -d and it will run until it is positive d
+      for (var i = -d; i <= d; i++) {
+        // run hasMajorDiagonalConflict with i as the input
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -205,6 +217,10 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      //CHANGE
+      // once an item appears in a certain index on a row, no other row can have that index occupied
+      // check every row at that colIndex and add up. if number is ever > 1 return true
+      // use this.get('n') to determine how many rows there are
       return false; // fixme
     },
 
