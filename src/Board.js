@@ -231,7 +231,7 @@
       var minorIndex = minorDiagonalColumnIndexAtFirstRow;
       var diagonalSum = 0;
       // use a while loop to increment and decrement indexes according to minorIndex
-      debugger;
+      // debugger;
       if (minorIndex === 0) {
         return false;
       }
@@ -267,8 +267,8 @@
       var n = this.get('n');
       // assign lastDiagonal to (n-2)*2+1
       var lastDiagonal = (n - 2) * 2 + 1;
-      console.log(lastDiagonal);
-      debugger;
+      // console.log(lastDiagonal);
+      // debugger;
       // create for loop
       // set i to start at -d and it will run until it is positive d
       for (var i = 1; i <= lastDiagonal; i++) {
